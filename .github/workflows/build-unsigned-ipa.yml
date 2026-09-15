@@ -1,0 +1,29 @@
+name: Build unsigned iOS IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Generate app icon
+        run: xcrun swift scripts/generate-app-icon.swift
+
+      - name: Build unsigned IPA
+        run: bash scripts/build-unsigned-ipa.sh
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: YuhunBox-unsigned
+          path: build/unsigned/YuhunBox-unsigned.ipa
+          if-no-files-found: error
+

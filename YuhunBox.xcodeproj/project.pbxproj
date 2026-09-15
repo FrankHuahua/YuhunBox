@@ -1,0 +1,508 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AA0000000000000000000001 /* YuhunBoxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000001 /* YuhunBoxApp.swift */; };
+		AA0000000000000000000002 /* DomainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000002 /* DomainModels.swift */; };
+		AA0000000000000000000003 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000003 /* AppStore.swift */; };
+		AA0000000000000000000004 /* SoulAdvisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000004 /* SoulAdvisor.swift */; };
+		AA0000000000000000000005 /* PresetCodeCodec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000005 /* PresetCodeCodec.swift */; };
+		AA0000000000000000000006 /* ScreenshotOCRService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000006 /* ScreenshotOCRService.swift */; };
+		AA0000000000000000000007 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000007 /* AppTheme.swift */; };
+		AA0000000000000000000008 /* SharedViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000008 /* SharedViews.swift */; };
+		AA0000000000000000000009 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000009 /* RootTabView.swift */; };
+		AA000000000000000000000A /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000000A /* DashboardView.swift */; };
+		AA000000000000000000000B /* SoulInventoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000000B /* SoulInventoryView.swift */; };
+		AA000000000000000000000C /* TeamListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000000C /* TeamListView.swift */; };
+		AA000000000000000000000D /* QRCodeViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000000D /* QRCodeViews.swift */; };
+		AA000000000000000000000E /* AdvisorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000000E /* AdvisorView.swift */; };
+		AA000000000000000000000F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000000F /* Assets.xcassets */; };
+		AA0000000000000000000010 /* YuhunBoxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000010 /* YuhunBoxTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		220000000000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC0000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD0000000000000000000001;
+			remoteInfo = YuhunBox;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		BB0000000000000000000001 /* YuhunBoxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YuhunBoxApp.swift; sourceTree = "<group>"; };
+		BB0000000000000000000002 /* DomainModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainModels.swift; sourceTree = "<group>"; };
+		BB0000000000000000000003 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
+		BB0000000000000000000004 /* SoulAdvisor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulAdvisor.swift; sourceTree = "<group>"; };
+		BB0000000000000000000005 /* PresetCodeCodec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetCodeCodec.swift; sourceTree = "<group>"; };
+		BB0000000000000000000006 /* ScreenshotOCRService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotOCRService.swift; sourceTree = "<group>"; };
+		BB0000000000000000000007 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		BB0000000000000000000008 /* SharedViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedViews.swift; sourceTree = "<group>"; };
+		BB0000000000000000000009 /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
+		BB000000000000000000000A /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		BB000000000000000000000B /* SoulInventoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulInventoryView.swift; sourceTree = "<group>"; };
+		BB000000000000000000000C /* TeamListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamListView.swift; sourceTree = "<group>"; };
+		BB000000000000000000000D /* QRCodeViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViews.swift; sourceTree = "<group>"; };
+		BB000000000000000000000E /* AdvisorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvisorView.swift; sourceTree = "<group>"; };
+		BB000000000000000000000F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BB0000000000000000000010 /* YuhunBoxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YuhunBoxTests.swift; sourceTree = "<group>"; };
+		BB0000000000000000000011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB0000000000000000000012 /* YuhunBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YuhunBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB0000000000000000000013 /* YuhunBoxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YuhunBoxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EE0000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE0000000000000000000004 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CC0000000000000000000002 = {
+			isa = PBXGroup;
+			children = (
+				CC0000000000000000000004 /* YuhunBox */,
+				CC000000000000000000000A /* YuhunBoxTests */,
+				CC0000000000000000000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BB0000000000000000000012 /* YuhunBox.app */,
+				BB0000000000000000000013 /* YuhunBoxTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000004 /* YuhunBox */ = {
+			isa = PBXGroup;
+			children = (
+				BB0000000000000000000001 /* YuhunBoxApp.swift */,
+				CC0000000000000000000005 /* Models */,
+				CC0000000000000000000006 /* Services */,
+				CC0000000000000000000007 /* Theme */,
+				CC0000000000000000000008 /* Components */,
+				CC0000000000000000000009 /* Views */,
+				BB000000000000000000000F /* Assets.xcassets */,
+				BB0000000000000000000011 /* Info.plist */,
+			);
+			path = YuhunBox;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000005 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BB0000000000000000000002 /* DomainModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000006 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				BB0000000000000000000003 /* AppStore.swift */,
+				BB0000000000000000000004 /* SoulAdvisor.swift */,
+				BB0000000000000000000005 /* PresetCodeCodec.swift */,
+				BB0000000000000000000006 /* ScreenshotOCRService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000007 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				BB0000000000000000000007 /* AppTheme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000008 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				BB0000000000000000000008 /* SharedViews.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000009 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BB0000000000000000000009 /* RootTabView.swift */,
+				BB000000000000000000000A /* DashboardView.swift */,
+				BB000000000000000000000B /* SoulInventoryView.swift */,
+				BB000000000000000000000C /* TeamListView.swift */,
+				BB000000000000000000000D /* QRCodeViews.swift */,
+				BB000000000000000000000E /* AdvisorView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CC000000000000000000000A /* YuhunBoxTests */ = {
+			isa = PBXGroup;
+			children = (
+				BB0000000000000000000010 /* YuhunBoxTests.swift */,
+			);
+			path = YuhunBoxTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DD0000000000000000000001 /* YuhunBox */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 110000000000000000000002 /* Build configuration list for PBXNativeTarget "YuhunBox" */;
+			buildPhases = (
+				EE0000000000000000000002 /* Sources */,
+				EE0000000000000000000001 /* Frameworks */,
+				EE0000000000000000000003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YuhunBox;
+			productName = YuhunBox;
+			productReference = BB0000000000000000000012 /* YuhunBox.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DD0000000000000000000002 /* YuhunBoxTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 110000000000000000000003 /* Build configuration list for PBXNativeTarget "YuhunBoxTests" */;
+			buildPhases = (
+				EE0000000000000000000005 /* Sources */,
+				EE0000000000000000000004 /* Frameworks */,
+				EE0000000000000000000006 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				220000000000000000000002 /* PBXTargetDependency */,
+			);
+			name = YuhunBoxTests;
+			productName = YuhunBoxTests;
+			productReference = BB0000000000000000000013 /* YuhunBoxTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CC0000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					DD0000000000000000000001 = { CreatedOnToolsVersion = 15.0; };
+					DD0000000000000000000002 = { CreatedOnToolsVersion = 15.0; TestTargetID = DD0000000000000000000001; };
+				};
+			};
+			buildConfigurationList = 110000000000000000000001 /* Build configuration list for PBXProject "YuhunBox" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = zh_CN;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+				zh_CN,
+			);
+			mainGroup = CC0000000000000000000002;
+			productRefGroup = CC0000000000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DD0000000000000000000001 /* YuhunBox */,
+				DD0000000000000000000002 /* YuhunBoxTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EE0000000000000000000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA000000000000000000000F /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE0000000000000000000006 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EE0000000000000000000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA0000000000000000000001 /* YuhunBoxApp.swift in Sources */,
+				AA0000000000000000000002 /* DomainModels.swift in Sources */,
+				AA0000000000000000000003 /* AppStore.swift in Sources */,
+				AA0000000000000000000004 /* SoulAdvisor.swift in Sources */,
+				AA0000000000000000000005 /* PresetCodeCodec.swift in Sources */,
+				AA0000000000000000000006 /* ScreenshotOCRService.swift in Sources */,
+				AA0000000000000000000007 /* AppTheme.swift in Sources */,
+				AA0000000000000000000008 /* SharedViews.swift in Sources */,
+				AA0000000000000000000009 /* RootTabView.swift in Sources */,
+				AA000000000000000000000A /* DashboardView.swift in Sources */,
+				AA000000000000000000000B /* SoulInventoryView.swift in Sources */,
+				AA000000000000000000000C /* TeamListView.swift in Sources */,
+				AA000000000000000000000D /* QRCodeViews.swift in Sources */,
+				AA000000000000000000000E /* AdvisorView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE0000000000000000000005 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA0000000000000000000010 /* YuhunBoxTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		220000000000000000000002 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD0000000000000000000001 /* YuhunBox */;
+			targetProxy = 220000000000000000000001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		FF0000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("DEBUG=1", "$(inherited)");
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FF0000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FF0000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = YuhunBox/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourname.YuhunBox;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FF0000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = YuhunBox/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourname.YuhunBox;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FF0000000000000000000005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourname.YuhunBoxTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YuhunBox.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/YuhunBox";
+			};
+			name = Debug;
+		};
+		FF0000000000000000000006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourname.YuhunBoxTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YuhunBox.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/YuhunBox";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		110000000000000000000001 /* Build configuration list for PBXProject "YuhunBox" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF0000000000000000000001 /* Debug */,
+				FF0000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		110000000000000000000002 /* Build configuration list for PBXNativeTarget "YuhunBox" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF0000000000000000000003 /* Debug */,
+				FF0000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		110000000000000000000003 /* Build configuration list for PBXNativeTarget "YuhunBoxTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF0000000000000000000005 /* Debug */,
+				FF0000000000000000000006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CC0000000000000000000001 /* Project object */;
+}
+
+

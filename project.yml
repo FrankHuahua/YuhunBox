@@ -1,0 +1,28 @@
+name: YuhunBox
+options:
+  bundleIdPrefix: com.yourname
+  deploymentTarget:
+    iOS: "16.0"
+settings:
+  base:
+    SWIFT_VERSION: 5.0
+targets:
+  YuhunBox:
+    type: application
+    platform: iOS
+    sources: [YuhunBox]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.yourname.YuhunBox
+        INFOPLIST_FILE: YuhunBox/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+    scheme:
+      testTargets: [YuhunBoxTests]
+  YuhunBoxTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [YuhunBoxTests]
+    dependencies:
+      - target: YuhunBox
+
