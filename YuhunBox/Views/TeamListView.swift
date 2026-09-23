@@ -216,24 +216,33 @@ struct TeamDetailView: View {
             } else {
                 ForEach(Array(team.members.indices), id: \.self) { index in
                     let member = team.members[index]
-                    HStack(spacing: 12) {
-                        Text("\(index + 1)")
-                            .font(.caption.weight(.bold).monospacedDigit())
-                            .foregroundStyle(.white)
-                            .frame(width: 26, height: 26)
-                            .background(index == 0 ? Color.crimson : Color.secondary, in: Circle())
-                        VStack(alignment: .leading, spacing: 4) {
-                            HStack {
-                                Text(member.name).font(.headline)
-                                Text(member.role).font(.caption).foregroundStyle(.secondary)
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack(spacing: 12) {
+                            Text("\(index + 1)")
+                                .font(.caption.weight(.bold).monospacedDigit())
+                                .foregroundStyle(.white)
+                                .frame(width: 26, height: 26)
+                                .background(index == 0 ? Color.crimson : Color.secondary, in: Circle())
+                            VStack(alignment: .leading, spacing: 4) {
+                                HStack {
+                                    Text(member.name).font(.headline)
+                                    Text(member.role).font(.caption).foregroundStyle(.secondary)
+                                }
+                                Text(member.soulPlan.isEmpty ? member.goal.title : member.soulPlan)
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
                             }
-                            Text(member.soulPlan.isEmpty ? member.goal.title : member.soulPlan)
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
+                            Spacer()
+                            if let speed = member.speedTarget {
+                                TagView(text: "速 \(speed)", tint: index == 0 ? .crimson : .secondary)
+                            }
                         }
-                        Spacer()
-                        if let speed = member.speedTarget {
-                            TagView(text: "速 \(speed)", tint: index == 0 ? .crimson : .secondary)
+                        if let requirements = member.requirements, !requirements.summary.isEmpty {
+                            Text(requirements.summary.joined(separator: " · "))
+                                .font(.caption)
+                                .foregroundStyle(Color.saffron)
+                                .padding(.leading, 38)
+                                .fixedSize(horizontal: false, vertical: true)
                         }
                     }
                     .padding(.horizontal, 16)
@@ -270,7 +279,7 @@ struct TeamDetailView: View {
                     .buttonStyle(.bordered)
                 }
             }
-            Text("御魂匣二维码包含完整预设；官方码仅原样保存，便于回到游戏中复制使用。")
+            Text("YHX2 二维码包含完整预设与属性门槛；官方码格式未公开时仅原样保存，不会虚构队伍详情。")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -307,7 +316,7 @@ struct TeamEditorView: View {
 
                     if team.members.count < 6 {
                         Button {
-                            team.members.append(TeamMember(name: "", role: "", goal: .survival, soulPlan: "", speedTarget: nil))
+                            team.members.append(TeamMember(name: "", role: "", goal: .survival, soulPlan: "", speedTarget: nil, requirements: nil))
                         } label: {
                             Label("添加式神", systemImage: "person.badge.plus")
                         }
@@ -361,6 +370,47 @@ struct TeamEditorView: View {
             TextField("御魂方案，例如：招财 · 速生生", text: $team.members[index].soulPlan)
             TextField("目标速度（可选）", text: speedBinding(for: index))
                 .keyboardType(.numberPad)
+            Toggle("填写御魂与属性要求", isOn: requirementsEnabledBinding(for: index))
+            if team.members[index].requirements != nil {
+                Picker("四件套", selection: optionalRequirementBinding(for: index, keyPath: \.primarySet)) {
+                    Text("不限").tag(SoulSet?.none)
+                    ForEach(SoulSet.allCases) { set in Text(set.rawValue).tag(Optional(set)) }
+                }
+                Picker("两件套", selection: optionalRequirementBinding(for: index, keyPath: \.secondarySet)) {
+                    Text("不限").tag(SoulSet?.none)
+                    ForEach(SoulSet.allCases) { set in Text(set.rawValue).tag(Optional(set)) }
+                }
+                Picker("二号位主属性", selection: optionalRequirementBinding(for: index, keyPath: \.slot2Main)) {
+                    Text("不限").tag(StatType?.none)
+                    ForEach(StatType.allCases) { stat in Text(stat.title).tag(Optional(stat)) }
+                }
+                Picker("四号位主属性", selection: optionalRequirementBinding(for: index, keyPath: \.slot4Main)) {
+                    Text("不限").tag(StatType?.none)
+                    ForEach(StatType.allCases) { stat in Text(stat.title).tag(Optional(stat)) }
+                }
+                Picker("六号位主属性", selection: optionalRequirementBinding(for: index, keyPath: \.slot6Main)) {
+                    Text("不限").tag(StatType?.none)
+                    ForEach(StatType.allCases) { stat in Text(stat.title).tag(Optional(stat)) }
+                }
+                TextField("最低速度", text: integerRequirementBinding(for: index, keyPath: \.speedMin))
+                    .keyboardType(.numberPad)
+                TextField("最低攻击", text: integerRequirementBinding(for: index, keyPath: \.attackMin))
+                    .keyboardType(.numberPad)
+                TextField("最低生命", text: integerRequirementBinding(for: index, keyPath: \.hpMin))
+                    .keyboardType(.numberPad)
+                TextField("最低防御", text: integerRequirementBinding(for: index, keyPath: \.defenseMin))
+                    .keyboardType(.numberPad)
+                TextField("最低暴击 %", text: decimalRequirementBinding(for: index, keyPath: \.critRateMin))
+                    .keyboardType(.decimalPad)
+                TextField("最低爆伤 %", text: decimalRequirementBinding(for: index, keyPath: \.critDamageMin))
+                    .keyboardType(.decimalPad)
+                TextField("最低命中 %", text: decimalRequirementBinding(for: index, keyPath: \.effectHitMin))
+                    .keyboardType(.decimalPad)
+                TextField("最低抵抗 %", text: decimalRequirementBinding(for: index, keyPath: \.effectResistMin))
+                    .keyboardType(.decimalPad)
+                TextField("额外要求", text: stringRequirementBinding(for: index, keyPath: \.notes), axis: .vertical)
+                    .lineLimit(1...3)
+            }
         } label: {
             HStack {
                 Text("\(index + 1)").font(.caption.weight(.bold)).foregroundStyle(.secondary)
@@ -374,6 +424,59 @@ struct TeamEditorView: View {
         Binding(
             get: { team.members[index].speedTarget.map(String.init) ?? "" },
             set: { team.members[index].speedTarget = Int($0.filter(\.isNumber)) }
+        )
+    }
+
+    private func requirementsEnabledBinding(for index: Int) -> Binding<Bool> {
+        Binding(
+            get: { team.members[index].requirements != nil },
+            set: { enabled in
+                team.members[index].requirements = enabled ? (team.members[index].requirements ?? MemberRequirements()) : nil
+            }
+        )
+    }
+
+    private func optionalRequirementBinding<Value>(for index: Int, keyPath: WritableKeyPath<MemberRequirements, Value?>) -> Binding<Value?> {
+        Binding(
+            get: { team.members[index].requirements?[keyPath: keyPath] },
+            set: { value in
+                var requirements = team.members[index].requirements ?? MemberRequirements()
+                requirements[keyPath: keyPath] = value
+                team.members[index].requirements = requirements
+            }
+        )
+    }
+
+    private func integerRequirementBinding(for index: Int, keyPath: WritableKeyPath<MemberRequirements, Int?>) -> Binding<String> {
+        Binding(
+            get: { team.members[index].requirements?[keyPath: keyPath].map(String.init) ?? "" },
+            set: { value in
+                var requirements = team.members[index].requirements ?? MemberRequirements()
+                requirements[keyPath: keyPath] = Int(value.filter(\.isNumber))
+                team.members[index].requirements = requirements
+            }
+        )
+    }
+
+    private func decimalRequirementBinding(for index: Int, keyPath: WritableKeyPath<MemberRequirements, Double?>) -> Binding<String> {
+        Binding(
+            get: { team.members[index].requirements?[keyPath: keyPath].map { String(format: "%g", $0) } ?? "" },
+            set: { value in
+                var requirements = team.members[index].requirements ?? MemberRequirements()
+                requirements[keyPath: keyPath] = Double(value.replacingOccurrences(of: ",", with: "."))
+                team.members[index].requirements = requirements
+            }
+        )
+    }
+
+    private func stringRequirementBinding(for index: Int, keyPath: WritableKeyPath<MemberRequirements, String>) -> Binding<String> {
+        Binding(
+            get: { team.members[index].requirements?[keyPath: keyPath] ?? "" },
+            set: { value in
+                var requirements = team.members[index].requirements ?? MemberRequirements()
+                requirements[keyPath: keyPath] = value
+                team.members[index].requirements = requirements
+            }
         )
     }
 }

@@ -17,13 +17,13 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.2.0</string>
+	<string>0.3.0</string>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>3</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>用于扫描御魂匣队伍预设二维码。</string>
+	<string>用于扫描阵容二维码并在导入前展示队伍详情。</string>
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UIColorName</key>

@@ -7,14 +7,36 @@ final class YuhunBoxTests: XCTestCase {
         let code = try PresetCodeCodec.encode(team)
         let decoded = try PresetCodeCodec.decode(code)
 
-        XCTAssertTrue(code.hasPrefix("YHX1:"))
+        XCTAssertTrue(code.hasPrefix("YHX2:"))
         XCTAssertEqual(decoded.title, team.title)
         XCTAssertEqual(decoded.members, team.members)
         XCTAssertEqual(decoded.officialCode, team.officialCode)
     }
 
+    func testDetailedRequirementsRoundTrip() throws {
+        var team = SampleData.teams[0]
+        team.members[0].requirements = MemberRequirements(
+            primarySet: .fortuneCat,
+            slot2Main: .speed,
+            slot4Main: .hpPercent,
+            slot6Main: .hpPercent,
+            speedMin: 165,
+            effectResistMin: 40
+        )
+
+        let decoded = try PresetCodeCodec.decode(PresetCodeCodec.encode(team))
+        XCTAssertEqual(decoded.members[0].requirements, team.members[0].requirements)
+    }
+
     func testInvalidPresetCodeIsRejected() {
         XCTAssertThrowsError(try PresetCodeCodec.decode("not-a-yuhunbox-code"))
+    }
+
+    func testTenYearCatalogMarkers() {
+        XCTAssertTrue(ShikigamiCatalog.records.contains { $0.name == "石长姬" && $0.rarity == .ssr })
+        XCTAssertTrue(ShikigamiCatalog.records.contains { $0.name == "百羽凤凰火" && $0.rarity == .sp })
+        XCTAssertFalse(ShikigamiCatalog.records.contains { $0.name == "SP不知火" })
+        XCTAssertGreaterThan(ShikigamiCatalog.records.count, 150)
     }
 
     func testSpeedPieceRanksForFirstSpeed() {

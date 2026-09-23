@@ -1,4 +1,6 @@
+import PhotosUI
 import SwiftUI
+import Vision
 import VisionKit
 
 struct PresetQRView: View {
@@ -20,11 +22,10 @@ struct PresetQRView: View {
                         .frame(maxWidth: 300)
                         .padding(14)
                         .background(.white, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
-                        .shadow(color: .black.opacity(0.08), radius: 12, y: 4)
                 } else {
                     EmptyState(symbol: "exclamationmark.triangle", title: "二维码生成失败", detail: "预设内容可能过长，请精简备注后重试。")
                 }
-                Text("使用御魂匣的“扫码导入”恢复完整队伍")
+                Text("YHX2 二维码包含式神、御魂方案和属性要求")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -49,26 +50,38 @@ struct TeamImportView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var code = ""
     @State private var showScanner = false
+    @State private var selectedPhoto: PhotosPickerItem?
+    @State private var isReadingPhoto = false
+    @State private var candidate: TeamImportCandidate?
     @State private var errorMessage: String?
     let onImport: (TeamPreset) -> Void
 
     var body: some View {
         NavigationStack {
             Form {
-                Section {
+                Section("选择来源") {
                     Button { showScanner = true } label: {
                         Label("打开相机扫码", systemImage: "qrcode.viewfinder")
                     }
+
+                    PhotosPicker(selection: $selectedPhoto, matching: .images) {
+                        Label(isReadingPhoto ? "正在识别…" : "从相册选择阵容码", systemImage: "photo.on.rectangle")
+                    }
+                    .disabled(isReadingPhoto)
                 } footer: {
-                    Text("可扫描御魂匣预设二维码；识别到其他文本时会作为官方阵容码保存。")
+                    Text("相机与相册使用同一解析流程，识别后先展示队伍详情，确认后才保存。")
                 }
 
                 Section("或粘贴阵容码") {
                     TextEditor(text: $code)
                         .font(.caption.monospaced())
-                        .frame(minHeight: 140)
-                    Button("导入") { importCode(code) }
+                        .frame(minHeight: 110)
+                    Button("解析阵容码") { prepareImport(code) }
                         .disabled(code.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                }
+
+                if let candidate {
+                    importPreview(candidate)
                 }
             }
             .navigationTitle("导入队伍")
@@ -78,8 +91,12 @@ struct TeamImportView: View {
                 QRScannerScreen { value in
                     showScanner = false
                     code = value
-                    importCode(value)
+                    prepareImport(value)
                 }
+            }
+            .onChange(of: selectedPhoto) { item in
+                guard let item else { return }
+                readPhoto(item)
             }
             .alert("无法导入", isPresented: Binding(get: { errorMessage != nil }, set: { if !$0 { errorMessage = nil } })) {
                 Button("知道了", role: .cancel) { errorMessage = nil }
@@ -87,21 +104,145 @@ struct TeamImportView: View {
         }
     }
 
-    private func importCode(_ value: String) {
+    @ViewBuilder private func importPreview(_ candidate: TeamImportCandidate) -> some View {
+        Section {
+            if candidate.isDetailed {
+                Label("已解析完整预设", systemImage: "checkmark.seal.fill")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.green)
+
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(candidate.team.title).font(.headline)
+                    Text("\(candidate.team.scene.isEmpty ? "未分类" : candidate.team.scene) · \(candidate.team.members.count) 名式神")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+
+                ForEach(Array(candidate.team.members.enumerated()), id: \.element.id) { index, member in
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Text("\(index + 1). \(member.name.isEmpty ? "未命名式神" : member.name)")
+                                .font(.subheadline.weight(.semibold))
+                            Spacer()
+                            if let speed = member.speedTarget {
+                                Text("速 \(speed)").font(.caption.monospacedDigit()).foregroundStyle(.secondary)
+                            }
+                        }
+                        Text(member.soulPlan.isEmpty ? member.goal.title : member.soulPlan)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        if let requirements = member.requirements, !requirements.summary.isEmpty {
+                            Text(requirements.summary.joined(separator: " · "))
+                                .font(.caption2)
+                                .foregroundStyle(Color.saffron)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+                    .padding(.vertical, 3)
+                }
+
+                Button {
+                    onImport(candidate.team)
+                    dismiss()
+                } label: {
+                    Label("导入完整预设", systemImage: "square.and.arrow.down")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+            } else {
+                Label("识别到官方原始阵容码", systemImage: "exclamationmark.shield.fill")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.orange)
+                Text("官方阵容码是由游戏客户端计算的封闭格式，公开资料中没有可离线还原式神、御魂与属性要求的协议。御魂匣不会虚构配置；你可以保存原码草稿，再手动补全详情。")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Text(candidate.rawCode)
+                    .font(.caption2.monospaced())
+                    .lineLimit(3)
+                    .textSelection(.enabled)
+                Button {
+                    onImport(candidate.team)
+                    dismiss()
+                } label: {
+                    Label("保存原始码草稿", systemImage: "doc.badge.plus")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
+            }
+        } header: {
+            Text("识别预览")
+        }
+    }
+
+    private func prepareImport(_ value: String) {
         let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
-        if trimmed.hasPrefix("YHX1:") {
+        if PresetCodeCodec.canDecode(trimmed) {
             do {
-                onImport(try PresetCodeCodec.decode(trimmed))
-                dismiss()
+                candidate = TeamImportCandidate(team: try PresetCodeCodec.decode(trimmed), rawCode: trimmed, isDetailed: true)
             } catch {
+                candidate = nil
                 errorMessage = error.localizedDescription
             }
         } else {
-            let team = TeamPreset(title: "扫码导入的官方阵容", scene: "待整理", members: [], officialCode: trimmed, notes: "请在编辑页补充式神与御魂方案。")
-            onImport(team)
-            dismiss()
+            let draft = TeamPreset(
+                title: "官方阵容码草稿",
+                scene: "待补全",
+                members: [],
+                officialCode: trimmed,
+                notes: "官方阵容码格式未公开，已保留原始码；请按游戏内计算结果补充式神、御魂与属性要求。"
+            )
+            candidate = TeamImportCandidate(team: draft, rawCode: trimmed, isDetailed: false)
         }
+    }
+
+    private func readPhoto(_ item: PhotosPickerItem) {
+        isReadingPhoto = true
+        Task {
+            defer { isReadingPhoto = false }
+            do {
+                guard let data = try await item.loadTransferable(type: Data.self) else {
+                    throw QRPhotoDecoderError.unreadableImage
+                }
+                let value = try QRPhotoDecoder.decodeFirstQR(in: data)
+                code = value
+                prepareImport(value)
+            } catch {
+                errorMessage = error.localizedDescription
+            }
+        }
+    }
+}
+
+private struct TeamImportCandidate {
+    let team: TeamPreset
+    let rawCode: String
+    let isDetailed: Bool
+}
+
+private enum QRPhotoDecoderError: LocalizedError {
+    case unreadableImage
+    case noQRCode
+    case emptyQRCode
+
+    var errorDescription: String? {
+        switch self {
+        case .unreadableImage: return "无法读取这张图片，请换一张原图重试。"
+        case .noQRCode: return "图片中没有识别到二维码。"
+        case .emptyQRCode: return "二维码内容为空。"
+        }
+    }
+}
+
+private enum QRPhotoDecoder {
+    static func decodeFirstQR(in data: Data) throws -> String {
+        let request = VNDetectBarcodesRequest()
+        request.symbologies = [.qr]
+        let handler = VNImageRequestHandler(data: data, options: [:])
+        try handler.perform([request])
+        guard let observation = request.results?.first else { throw QRPhotoDecoderError.noQRCode }
+        guard let value = observation.payloadStringValue, !value.isEmpty else { throw QRPhotoDecoderError.emptyQRCode }
+        return value
     }
 }
 
@@ -119,10 +260,9 @@ private struct QRScannerScreen: View {
                             RoundedRectangle(cornerRadius: 22)
                                 .stroke(Color.white, style: StrokeStyle(lineWidth: 3, dash: [10, 7]))
                                 .frame(width: 250, height: 250)
-                                .shadow(color: .black.opacity(0.4), radius: 4)
                         }
                 } else {
-                    EmptyState(symbol: "camera.fill", title: "此设备不支持相机扫描", detail: "请返回后把预设码粘贴到文本框中。")
+                    EmptyState(symbol: "camera.fill", title: "此设备不支持相机扫描", detail: "请返回后从相册选择，或粘贴预设码。")
                         .padding()
                 }
             }

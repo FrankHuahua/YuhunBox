@@ -193,6 +193,46 @@ struct TeamMember: Codable, Hashable, Identifiable {
     var goal: BuildGoal
     var soulPlan: String
     var speedTarget: Int?
+    var requirements: MemberRequirements? = nil
+}
+
+struct MemberRequirements: Codable, Hashable {
+    var primarySet: SoulSet? = nil
+    var secondarySet: SoulSet? = nil
+    var slot2Main: StatType? = nil
+    var slot4Main: StatType? = nil
+    var slot6Main: StatType? = nil
+    var speedMin: Int? = nil
+    var attackMin: Int? = nil
+    var hpMin: Int? = nil
+    var defenseMin: Int? = nil
+    var critRateMin: Double? = nil
+    var critDamageMin: Double? = nil
+    var effectHitMin: Double? = nil
+    var effectResistMin: Double? = nil
+    var notes = ""
+
+    var summary: [String] {
+        var values: [String] = []
+        if let primarySet { values.append(primarySet.rawValue) }
+        if let secondarySet { values.append(secondarySet.rawValue) }
+        let mains = [slot2Main, slot4Main, slot6Main]
+            .map { $0?.shortTitle ?? "不限" }
+            .joined(separator: " / ")
+        if slot2Main != nil || slot4Main != nil || slot6Main != nil {
+            values.append("主属性 \(mains)")
+        }
+        if let speedMin { values.append("速度≥\(speedMin)") }
+        if let attackMin { values.append("攻击≥\(attackMin)") }
+        if let hpMin { values.append("生命≥\(hpMin)") }
+        if let defenseMin { values.append("防御≥\(defenseMin)") }
+        if let critRateMin { values.append("暴击≥\(critRateMin.formattedPercent)") }
+        if let critDamageMin { values.append("爆伤≥\(critDamageMin.formattedPercent)") }
+        if let effectHitMin { values.append("命中≥\(effectHitMin.formattedPercent)") }
+        if let effectResistMin { values.append("抵抗≥\(effectResistMin.formattedPercent)") }
+        if !notes.isEmpty { values.append(notes) }
+        return values
+    }
 }
 
 struct TeamPreset: Codable, Hashable, Identifiable {
@@ -245,5 +285,11 @@ extension Color {
     static let crimson = AppTheme.pink
     static let saffron = AppTheme.cyan
     static let ink = Color(red: 0.018, green: 0.022, blue: 0.035)
+}
+
+private extension Double {
+    var formattedPercent: String {
+        String(format: rounded() == self ? "%.0f%%" : "%.1f%%", self)
+    }
 }
 

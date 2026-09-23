@@ -16,25 +16,40 @@ enum PresetCodeError: LocalizedError {
 }
 
 enum PresetCodeCodec {
-    private static let prefix = "YHX1:"
+    private static let currentPrefix = "YHX2:"
+    private static let legacyPrefix = "YHX1:"
+
+    static func canDecode(_ value: String) -> Bool {
+        let compact = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        return compact.hasPrefix(currentPrefix) || compact.hasPrefix(legacyPrefix)
+    }
 
     static func encode(_ team: TeamPreset) throws -> String {
-        let envelope = PresetEnvelope(version: 1, team: team)
+        let envelope = PresetEnvelope(version: 2, team: team)
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         encoder.outputFormatting = [.sortedKeys]
         let data = try encoder.encode(envelope)
-        return prefix + base64URL(data)
+        return currentPrefix + base64URL(data)
     }
 
     static func decode(_ value: String) throws -> TeamPreset {
         let compact = value.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard compact.hasPrefix(prefix) else { throw PresetCodeError.unsupportedFormat }
-        let encoded = String(compact.dropFirst(prefix.count))
+        let expectedVersion: Int
+        let encoded: String
+        if compact.hasPrefix(currentPrefix) {
+            expectedVersion = 2
+            encoded = String(compact.dropFirst(currentPrefix.count))
+        } else if compact.hasPrefix(legacyPrefix) {
+            expectedVersion = 1
+            encoded = String(compact.dropFirst(legacyPrefix.count))
+        } else {
+            throw PresetCodeError.unsupportedFormat
+        }
         guard let data = dataFromBase64URL(encoded) else { throw PresetCodeError.corrupted }
         do {
             let envelope = try JSONDecoder.appDecoder.decode(PresetEnvelope.self, from: data)
-            guard envelope.version == 1 else { throw PresetCodeError.unsupportedFormat }
+            guard envelope.version == expectedVersion else { throw PresetCodeError.unsupportedFormat }
             return envelope.team
         } catch let error as PresetCodeError {
             throw error
