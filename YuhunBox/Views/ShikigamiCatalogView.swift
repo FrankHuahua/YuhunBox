@@ -1,3 +1,4 @@
+import SafariServices
 import SwiftUI
 
 enum ShikigamiRarity: String, CaseIterable, Identifiable {
@@ -48,7 +49,7 @@ struct ShikigamiRecord: Identifiable, Hashable {
 
     var sourceURL: URL? {
         let encoded = name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? name
-        return URL(string: "https://wiki.biligame.com/yys/\(encoded)")
+        return URL(string: "https://yys.huijiwiki.com/wiki/\(encoded)")
     }
 }
 
@@ -168,6 +169,7 @@ private struct ShikigamiRow: View {
 
 private struct ShikigamiDetailView: View {
     let item: ShikigamiRecord
+    @State private var showSource = false
 
     var body: some View {
         ScrollView {
@@ -182,6 +184,12 @@ private struct ShikigamiDetailView: View {
         .background(AppTheme.page)
         .navigationTitle(item.name)
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $showSource) {
+            if let url = item.sourceURL {
+                ShikigamiReferenceBrowser(url: url)
+                    .ignoresSafeArea()
+            }
+        }
     }
 
     private var header: some View {
@@ -214,7 +222,7 @@ private struct ShikigamiDetailView: View {
                 stat("暴击", item.crit)
             }
             if !item.verified {
-                Text("为避免版本变更造成错误，尚未核验的数值不使用推测数据。可通过下方资料源查看并在后续数据包中更新。")
+                Text("为避免版本变更造成错误，尚未核验的数值不使用推测数据。点击下方完整资料可查看当前属性。")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -234,7 +242,7 @@ private struct ShikigamiDetailView: View {
         VStack(alignment: .leading, spacing: 12) {
             SectionHeading(title: "技能详情", detail: item.skills.isEmpty ? "待校验" : "简要机制")
             if item.skills.isEmpty {
-                Text("该式神已收录进名录，技能机制仍在逐条校验。为了不把旧版本或攻略猜测写进图鉴，本版暂不展示未经核验的技能文本。")
+                Text("该式神已收录进本地名录；技能机制可通过下方完整资料在 App 内查看。离线缓存会在逐条核验后继续补充。")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             } else {
@@ -255,14 +263,26 @@ private struct ShikigamiDetailView: View {
     }
 
     @ViewBuilder private var source: some View {
-        if let url = item.sourceURL {
-            Link(destination: url) {
-                Label("查看并核对最新资料", systemImage: "safari")
+        if item.sourceURL != nil {
+            Button { showSource = true } label: {
+                Label("打开完整资料（属性与技能）", systemImage: "safari")
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.bordered)
         }
     }
+}
+
+private struct ShikigamiReferenceBrowser: UIViewControllerRepresentable {
+    let url: URL
+
+    func makeUIViewController(context: Context) -> SFSafariViewController {
+        let configuration = SFSafariViewController.Configuration()
+        configuration.entersReaderIfAvailable = false
+        return SFSafariViewController(url: url, configuration: configuration)
+    }
+
+    func updateUIViewController(_ uiViewController: SFSafariViewController, context: Context) {}
 }
 
 enum ShikigamiCatalog {
