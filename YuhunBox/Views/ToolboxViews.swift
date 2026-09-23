@@ -127,7 +127,7 @@ struct LoadoutSimulatorView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Label("模拟说明", systemImage: "info.circle.fill")
                             .font(.subheadline.weight(.semibold))
-                            .foregroundStyle(.saffron)
+                            .foregroundStyle(Color.saffron)
                         Text("模拟器按套装完整度、位置和当前养成方向评分自动选取，不会修改库存。实战前仍需结合式神面板、技能和队伍速度轴。")
                             .font(.caption)
                             .foregroundStyle(.secondary)
@@ -324,7 +324,7 @@ struct BackupRestoreView: View {
                 VStack(alignment: .leading, spacing: 10) {
                     Image(systemName: "externaldrive.badge.icloud")
                         .font(.system(size: 36, weight: .semibold))
-                        .foregroundStyle(.saffron)
+                        .foregroundStyle(Color.saffron)
                     Text("本地数据备份")
                         .font(.title2.weight(.bold))
                     Text("导出文件包含御魂、队伍与偏好设置。可保存到“文件”或通过隔空投送迁移到另一台设备。")

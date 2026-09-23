@@ -274,7 +274,7 @@ struct DashboardView: View {
 
 struct SettingsView: View {
     @EnvironmentObject private var store: AppStore
-    @Environment(.dismiss) private var dismiss
+    @Environment(\.dismiss) private var dismiss
     @State private var confirmClear = false
 
     var body: some View {
