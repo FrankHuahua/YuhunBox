@@ -59,7 +59,7 @@ struct TeamImportView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("选择来源") {
+                Section {
                     Button { showScanner = true } label: {
                         Label("打开相机扫码", systemImage: "qrcode.viewfinder")
                     }
@@ -68,6 +68,8 @@ struct TeamImportView: View {
                         Label(isReadingPhoto ? "正在识别…" : "从相册选择阵容码", systemImage: "photo.on.rectangle")
                     }
                     .disabled(isReadingPhoto)
+                } header: {
+                    Text("选择来源")
                 } footer: {
                     Text("相机与相册使用同一解析流程，识别后先展示队伍详情，确认后才保存。")
                 }
