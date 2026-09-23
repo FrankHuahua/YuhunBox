@@ -28,6 +28,7 @@ struct SoulInventoryView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
+                navigationStrip
                 filterBar
                 if filteredSouls.isEmpty {
                     EmptyState(
@@ -75,6 +76,29 @@ struct SoulInventoryView: View {
                 SoulScreenshotImportView { store.upsert($0) }
             }
         }
+    }
+
+    private var navigationStrip: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+                Button { editorSoul = SoulEditorView.blankSoul } label: {
+                    ModuleNavLabel(title: "录入御魂", detail: "填写主副属性", symbol: "plus.circle.fill", tint: .crimson)
+                }
+                Button { showOCRImport = true } label: {
+                    ModuleNavLabel(title: "截图识别", detail: "设备端 OCR", symbol: "text.viewfinder", tint: .saffron)
+                }
+                NavigationLink { LoadoutSimulatorView() } label: {
+                    ModuleNavLabel(title: "配装模拟", detail: "自动挑选六件套", symbol: "slider.horizontal.3", tint: .orange)
+                }
+                NavigationLink { UpgradeQueueView() } label: {
+                    ModuleNavLabel(title: "强化清单", detail: "查看高潜胚子", symbol: "checklist", tint: .purple)
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+        }
+        .buttonStyle(.plain)
+        .background(AppTheme.page)
     }
 
     private var filterBar: some View {
@@ -247,7 +271,7 @@ struct SoulEditorView: View {
     }
 }
 
-private struct SoulScreenshotImportView: View {
+struct SoulScreenshotImportView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var selectedItem: PhotosPickerItem?
     @State private var draft: SoulPiece?

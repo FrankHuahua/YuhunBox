@@ -7,26 +7,30 @@ struct TeamListView: View {
 
     var body: some View {
         NavigationStack {
-            Group {
-                if store.teams.isEmpty {
-                    EmptyState(symbol: "person.3", title: "还没有队伍预设", detail: "建立常用副本或斗技队伍，也可以扫码导入别人分享的预设。")
-                } else {
-                    ScrollView {
-                        LazyVStack(spacing: 12) {
-                            ForEach(store.teams.sorted(by: { $0.updatedAt > $1.updatedAt })) { team in
-                                NavigationLink {
-                                    TeamDetailView(teamID: team.id)
-                                } label: {
-                                    TeamCard(team: team)
-                                }
-                                .buttonStyle(.plain)
-                                .contextMenu {
-                                    Button { editorTeam = team } label: { Label("编辑", systemImage: "pencil") }
-                                    Button(role: .destructive) { store.deleteTeam(team) } label: { Label("删除", systemImage: "trash") }
+            VStack(spacing: 0) {
+                navigationStrip
+                Group {
+                    if store.teams.isEmpty {
+                        EmptyState(symbol: "person.3", title: "还没有队伍预设", detail: "建立常用副本或斗技队伍，也可以扫码导入别人分享的预设。")
+                        Spacer()
+                    } else {
+                        ScrollView {
+                            LazyVStack(spacing: 12) {
+                                ForEach(store.teams.sorted(by: { $0.updatedAt > $1.updatedAt })) { team in
+                                    NavigationLink {
+                                        TeamDetailView(teamID: team.id)
+                                    } label: {
+                                        TeamCard(team: team)
+                                    }
+                                    .buttonStyle(.plain)
+                                    .contextMenu {
+                                        Button { editorTeam = team } label: { Label("编辑", systemImage: "pencil") }
+                                        Button(role: .destructive) { store.deleteTeam(team) } label: { Label("删除", systemImage: "trash") }
+                                    }
                                 }
                             }
+                            .padding(16)
                         }
-                        .padding(16)
                     }
                 }
             }
@@ -47,6 +51,26 @@ struct TeamListView: View {
                 TeamImportView { store.importTeam($0) }
             }
         }
+    }
+
+    private var navigationStrip: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+                Button { editorTeam = TeamEditorView.blankTeam } label: {
+                    ModuleNavLabel(title: "新建队伍", detail: "阵容与配速", symbol: "person.badge.plus", tint: .crimson)
+                }
+                Button { showImport = true } label: {
+                    ModuleNavLabel(title: "扫码导入", detail: "阵容码 / 二维码", symbol: "qrcode.viewfinder", tint: .green)
+                }
+                NavigationLink { SpeedTimelineView() } label: {
+                    ModuleNavLabel(title: "速度轴", detail: "检查行动顺序", symbol: "arrow.up.arrow.down", tint: .saffron)
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+        }
+        .buttonStyle(.plain)
+        .background(AppTheme.page)
     }
 }
 

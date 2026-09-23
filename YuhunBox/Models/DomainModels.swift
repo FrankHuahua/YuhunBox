@@ -242,8 +242,8 @@ struct LoadoutSuggestion: Identifiable, Hashable {
 }
 
 extension Color {
-    static let crimson = Color(red: 0.73, green: 0.16, blue: 0.13)
-    static let saffron = Color(red: 0.86, green: 0.62, blue: 0.20)
-    static let ink = Color(red: 0.10, green: 0.09, blue: 0.09)
+    static let crimson = AppTheme.pink
+    static let saffron = AppTheme.cyan
+    static let ink = Color(red: 0.018, green: 0.022, blue: 0.035)
 }
 

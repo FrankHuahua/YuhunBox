@@ -1,12 +1,20 @@
 import SwiftUI
 
 enum AppTheme {
-    static let page = Color(uiColor: .systemGroupedBackground)
-    static let card = Color(uiColor: .secondarySystemGroupedBackground)
-    static let muted = Color(uiColor: .secondaryLabel)
-    static let separator = Color(uiColor: .separator).opacity(0.4)
+    static let page = Color(red: 0.025, green: 0.03, blue: 0.045)
+    static let card = Color(red: 0.075, green: 0.085, blue: 0.115)
+    static let elevated = Color(red: 0.105, green: 0.115, blue: 0.15)
+    static let muted = Color.white.opacity(0.62)
+    static let separator = Color.white.opacity(0.09)
+    static let cyan = Color(red: 0.18, green: 0.90, blue: 0.94)
+    static let pink = Color(red: 1.00, green: 0.15, blue: 0.39)
     static let heroGradient = LinearGradient(
-        colors: [Color.ink, Color(red: 0.28, green: 0.09, blue: 0.08)],
+        colors: [Color(red: 0.035, green: 0.07, blue: 0.13), Color(red: 0.23, green: 0.045, blue: 0.15)],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+    static let accentGradient = LinearGradient(
+        colors: [cyan, pink],
         startPoint: .topLeading,
         endPoint: .bottomTrailing
     )
@@ -19,6 +27,10 @@ struct CardStyle: ViewModifier {
         content
             .padding(padding)
             .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .overlay {
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .stroke(Color.white.opacity(0.055), lineWidth: 1)
+            }
     }
 }
 
@@ -52,24 +64,19 @@ struct AppMark: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: size * 0.28, style: .continuous)
-                .fill(LinearGradient(colors: [.crimson, Color(red: 0.38, green: 0.05, blue: 0.07)], startPoint: .topLeading, endPoint: .bottomTrailing))
-            Circle()
-                .stroke(Color.saffron.opacity(0.85), lineWidth: max(1, size * 0.035))
-                .padding(size * 0.20)
-            Circle()
-                .fill(Color.saffron)
-                .frame(width: size * 0.17, height: size * 0.17)
-            ForEach(0..<6, id: \.self) { index in
-                Capsule()
-                    .fill(Color.saffron.opacity(0.9))
-                    .frame(width: size * 0.08, height: size * 0.22)
-                    .offset(y: -size * 0.27)
-                    .rotationEffect(.degrees(Double(index) * 60))
-            }
+                .fill(Color.ink)
+            Image(systemName: "snowflake")
+                .font(.system(size: size * 0.50, weight: .bold))
+                .foregroundStyle(AppTheme.cyan)
+                .offset(x: -size * 0.035, y: -size * 0.025)
+            Image(systemName: "snowflake")
+                .font(.system(size: size * 0.50, weight: .bold))
+                .foregroundStyle(AppTheme.pink.opacity(0.72))
+                .offset(x: size * 0.055, y: size * 0.045)
+                .blendMode(.screen)
         }
         .frame(width: size, height: size)
         .accessibilityHidden(true)
     }
 }
-
 

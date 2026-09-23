@@ -78,6 +78,21 @@ final class AppStore: ObservableObject {
         installSampleData()
     }
 
+    func exportData() throws -> Data {
+        let snapshot = AppSnapshot(souls: souls, teams: teams, preferences: preferences)
+        return try JSONEncoder.appEncoder.encode(snapshot)
+    }
+
+    func importData(_ data: Data) throws {
+        let snapshot = try JSONDecoder.appDecoder.decode(AppSnapshot.self, from: data)
+        isRestoring = true
+        souls = snapshot.souls
+        teams = snapshot.teams
+        preferences = snapshot.preferences
+        isRestoring = false
+        save()
+    }
+
     private func restore() {
         guard
             let data = try? Data(contentsOf: saveURL),
@@ -105,7 +120,7 @@ final class AppStore: ObservableObject {
     }
 }
 
-private struct AppSnapshot: Codable {
+struct AppSnapshot: Codable {
     let souls: [SoulPiece]
     let teams: [TeamPreset]
     let preferences: UserPreferences

@@ -23,6 +23,7 @@
 		AA000000000000000000000E /* AdvisorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000000E /* AdvisorView.swift */; };
 		AA000000000000000000000F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000000F /* Assets.xcassets */; };
 		AA0000000000000000000010 /* YuhunBoxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000010 /* YuhunBoxTests.swift */; };
+		AA0000000000000000000011 /* ToolboxViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000014 /* ToolboxViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		BB0000000000000000000011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB0000000000000000000012 /* YuhunBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YuhunBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB0000000000000000000013 /* YuhunBoxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YuhunBoxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB0000000000000000000014 /* ToolboxViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolboxViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 				BB000000000000000000000C /* TeamListView.swift */,
 				BB000000000000000000000D /* QRCodeViews.swift */,
 				BB000000000000000000000E /* AdvisorView.swift */,
+				BB0000000000000000000014 /* ToolboxViews.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 				AA000000000000000000000C /* TeamListView.swift in Sources */,
 				AA000000000000000000000D /* QRCodeViews.swift in Sources */,
 				AA000000000000000000000E /* AdvisorView.swift in Sources */,
+				AA0000000000000000000011 /* ToolboxViews.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,13 +405,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = YuhunBox/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourname.YuhunBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -424,12 +428,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = YuhunBox/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourname.YuhunBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -504,5 +508,4 @@
 	};
 	rootObject = CC0000000000000000000001 /* Project object */;
 }
-
 

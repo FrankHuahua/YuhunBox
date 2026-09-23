@@ -11,6 +11,7 @@ struct AdvisorView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
+                    navigationStrip
                     goalSelector
                     directionCard
                     loadoutSection
@@ -24,6 +25,23 @@ struct AdvisorView: View {
             .navigationTitle("御魂顾问")
             .onAppear { goal = store.preferences.primaryGoal }
         }
+    }
+
+    private var navigationStrip: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+                NavigationLink { LoadoutSimulatorView() } label: {
+                    ModuleNavLabel(title: "配装模拟", detail: "生成六件套", symbol: "slider.horizontal.3", tint: .crimson)
+                }
+                NavigationLink { UpgradeQueueView() } label: {
+                    ModuleNavLabel(title: "强化清单", detail: "筛选高潜胚子", symbol: "checklist", tint: .purple)
+                }
+                NavigationLink { SpeedTimelineView() } label: {
+                    ModuleNavLabel(title: "速度轴", detail: "队伍配速检查", symbol: "arrow.up.arrow.down", tint: .saffron)
+                }
+            }
+        }
+        .buttonStyle(.plain)
     }
 
     private var goalSelector: some View {

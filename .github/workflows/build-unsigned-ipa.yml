@@ -14,9 +14,6 @@ jobs:
       - name: Check out source
         uses: actions/checkout@v4
 
-      - name: Generate app icon
-        run: xcrun swift scripts/generate-app-icon.swift
-
       - name: Build unsigned IPA
         run: bash scripts/build-unsigned-ipa.sh
 
