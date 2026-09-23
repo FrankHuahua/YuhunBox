@@ -162,9 +162,9 @@ struct DashboardView: View {
 
     private var metrics: some View {
         HStack(spacing: 10) {
-            MetricTile(title: "御魂", value: "(store.souls.count)", symbol: "circle.hexagongrid.fill", tint: .saffron)
-            MetricTile(title: "队伍", value: "(store.teams.count)", symbol: "person.3.fill", tint: .crimson)
-            MetricTile(title: "待强化", value: "(store.souls.filter { $0.level < 15 }.count)", symbol: "hammer.fill", tint: .orange)
+            MetricTile(title: "御魂", value: "\(store.souls.count)", symbol: "circle.hexagongrid.fill", tint: .saffron)
+            MetricTile(title: "队伍", value: "\(store.teams.count)", symbol: "person.3.fill", tint: .crimson)
+            MetricTile(title: "待强化", value: "\(store.souls.filter { $0.level < 15 }.count)", symbol: "hammer.fill", tint: .orange)
         }
     }
 
@@ -196,7 +196,7 @@ struct DashboardView: View {
                     .appCard()
             } else {
                 VStack(spacing: 0) {
-                    ForEach(Array(topCandidates.indices), id: .self) { index in
+                    ForEach(Array(topCandidates.indices), id: \.self) { index in
                         SoulRow(soul: topCandidates[index].soul, score: topCandidates[index])
                             .padding(.horizontal, 14)
                             .padding(.vertical, 7)
@@ -232,7 +232,7 @@ struct DashboardView: View {
     private var recentFeed: some View {
         VStack(spacing: 18) {
             VStack(alignment: .leading, spacing: 12) {
-                SectionHeading(title: "最近队伍", detail: "(store.teams.count) 套")
+                SectionHeading(title: "最近队伍", detail: "\(store.teams.count) 套")
                 if store.teams.isEmpty {
                     EmptyState(symbol: "person.3", title: "还没有预设", detail: "从底部中央按钮快速新建队伍。").appCard()
                 } else {
@@ -241,7 +241,7 @@ struct DashboardView: View {
                             HStack {
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(team.title).font(.headline).foregroundStyle(.primary)
-                                    Text("(team.scene.isEmpty ? "未分类" : team.scene) · (team.members.count) 名式神")
+                                    Text("\(team.scene.isEmpty ? "未分类" : team.scene) · \(team.members.count) 名式神")
                                         .font(.caption).foregroundStyle(.secondary)
                                 }
                                 Spacer()
@@ -255,7 +255,7 @@ struct DashboardView: View {
             }
 
             VStack(alignment: .leading, spacing: 12) {
-                SectionHeading(title: "最近录入", detail: "(store.souls.count) 件")
+                SectionHeading(title: "最近录入", detail: "\(store.souls.count) 件")
                 ForEach(store.souls.sorted(by: { $0.createdAt > $1.createdAt }).prefix(5)) { soul in
                     SoulRow(soul: soul).appCard()
                 }
@@ -282,7 +282,7 @@ struct SettingsView: View {
             Form {
                 Section("账号") {
                     Picker("养成阶段", selection: $store.preferences.accountStage) {
-                        ForEach(["新手期", "养成中期", "阵容完善期", "御魂精修期"], id: .self) { Text($0) }
+                        ForEach(["新手期", "养成中期", "阵容完善期", "御魂精修期"], id: \.self) { Text($0) }
                     }
                 }
                 Section("工具") {

@@ -74,7 +74,7 @@ struct LoadoutSimulatorView: View {
     @State private var onlyLocked = false
 
     private var candidates: [SoulPiece] {
-        onlyLocked ? store.souls.filter(.isLocked) : store.souls
+        onlyLocked ? store.souls.filter(\.isLocked) : store.souls
     }
 
     private var suggestion: LoadoutSuggestion? {
@@ -99,7 +99,7 @@ struct LoadoutSimulatorView: View {
                     VStack(alignment: .leading, spacing: 12) {
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
-                                Text(suggestion.dominantSet.map { "($0.rawValue)四件套" } ?? "散件过渡")
+                                Text(suggestion.dominantSet.map { "\($0.rawValue)四件套" } ?? "散件过渡")
                                     .font(.title3.weight(.bold))
                                 Text(suggestion.note)
                                     .font(.caption)
@@ -115,7 +115,7 @@ struct LoadoutSimulatorView: View {
                     .appCard()
 
                     VStack(spacing: 0) {
-                        ForEach(Array(suggestion.pieces.indices), id: .self) { index in
+                        ForEach(Array(suggestion.pieces.indices), id: \.self) { index in
                             SoulRow(soul: suggestion.pieces[index].soul, score: suggestion.pieces[index])
                                 .padding(.horizontal, 14)
                                 .padding(.vertical, 7)
@@ -198,7 +198,7 @@ struct SpeedTimelineView: View {
             .sorted { ($0.speedTarget ?? 0) > ($1.speedTarget ?? 0) }
 
         return VStack(alignment: .leading, spacing: 0) {
-            SectionHeading(title: "预计行动顺序", detail: "(sorted.count) 人已配速")
+            SectionHeading(title: "预计行动顺序", detail: "\(sorted.count) 人已配速")
                 .padding(16)
 
             if sorted.isEmpty {
@@ -208,11 +208,11 @@ struct SpeedTimelineView: View {
                     .frame(maxWidth: .infinity)
                     .padding(24)
             } else {
-                ForEach(Array(sorted.enumerated()), id: .element.id) { index, member in
+                ForEach(Array(sorted.enumerated()), id: \.element.id) { index, member in
                     HStack(spacing: 12) {
                         ZStack {
                             Circle().fill(index == 0 ? AppTheme.accentGradient : LinearGradient(colors: [AppTheme.elevated], startPoint: .top, endPoint: .bottom))
-                            Text("(index + 1)")
+                            Text("\(index + 1)")
                                 .font(.caption.weight(.black))
                                 .foregroundStyle(.white)
                         }
@@ -228,7 +228,7 @@ struct SpeedTimelineView: View {
                         Text(member.speedTarget.map(String.init) ?? "—")
                             .font(.title3.monospacedDigit().weight(.bold))
                         if index < sorted.count - 1, let current = member.speedTarget, let next = sorted[index + 1].speedTarget {
-                            Text("-(current - next)")
+                            Text("-\(current - next)")
                                 .font(.caption2.monospacedDigit())
                                 .foregroundStyle(.secondary)
                         }
@@ -243,7 +243,7 @@ struct SpeedTimelineView: View {
     }
 
     @ViewBuilder private func warnings(_ team: TeamPreset) -> some View {
-        let speeds = team.members.compactMap(.speedTarget)
+        let speeds = team.members.compactMap(\.speedTarget)
         let duplicated = Set(speeds).count != speeds.count
         let missing = team.members.filter { $0.speedTarget == nil }.count
 
@@ -253,7 +253,7 @@ struct SpeedTimelineView: View {
                 warning("存在相同目标速度", "同速时实际行动顺序可能受式神基础速度等因素影响。", "exclamationmark.triangle.fill", .orange)
             }
             if missing > 0 {
-                warning("(missing) 名式神未填速度", "补齐速度后才能完整检查行动顺序。", "questionmark.circle.fill", .saffron)
+                warning("\(missing) 名式神未填速度", "补齐速度后才能完整检查行动顺序。", "questionmark.circle.fill", .saffron)
             }
             if !duplicated && missing == 0 && !speeds.isEmpty {
                 warning("速度轴信息完整", "当前没有同速冲突，仍建议进战斗实测拉条与推条效果。", "checkmark.circle.fill", .green)
@@ -339,7 +339,7 @@ struct BackupRestoreView: View {
                         document = BackupDocument(data: try store.exportData())
                         showExporter = true
                     } catch {
-                        message = "导出失败：(error.localizedDescription)"
+                        message = "导出失败：\(error.localizedDescription)"
                     }
                 } label: {
                     Label("导出完整备份", systemImage: "square.and.arrow.up")
@@ -372,9 +372,9 @@ struct BackupRestoreView: View {
             isPresented: $showExporter,
             document: document,
             contentType: .json,
-            defaultFilename: "御魂匣备份-(Date.now.formatted(.dateTime.year().month().day()))"
+            defaultFilename: "御魂匣备份-\(Date.now.formatted(.dateTime.year().month().day()))"
         ) { result in
-            if case .failure(let error) = result { message = "导出失败：(error.localizedDescription)" }
+            if case .failure(let error) = result { message = "导出失败：\(error.localizedDescription)" }
         }
         .fileImporter(isPresented: $showImporter, allowedContentTypes: [.json], allowsMultipleSelection: false) { result in
             do {
@@ -384,7 +384,7 @@ struct BackupRestoreView: View {
                 pendingImport = try Data(contentsOf: url)
                 confirmImport = true
             } catch {
-                message = "读取失败：(error.localizedDescription)"
+                message = "读取失败：\(error.localizedDescription)"
             }
         }
         .confirmationDialog("恢复这份备份？", isPresented: $confirmImport, titleVisibility: .visible) {
@@ -392,10 +392,10 @@ struct BackupRestoreView: View {
                 guard let pendingImport else { return }
                 do {
                     try store.importData(pendingImport)
-                    message = "恢复完成：已导入 (store.souls.count) 件御魂和 (store.teams.count) 套队伍。"
+                    message = "恢复完成：已导入 \(store.souls.count) 件御魂和 \(store.teams.count) 套队伍。"
                     self.pendingImport = nil
                 } catch {
-                    message = "备份格式无效：(error.localizedDescription)"
+                    message = "备份格式无效：\(error.localizedDescription)"
                 }
             }
             Button("取消", role: .cancel) { pendingImport = nil }
